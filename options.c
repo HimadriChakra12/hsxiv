@@ -63,7 +63,7 @@ parse_options(int argc, char **argv)
 
 	_options.fullscreen = false;
 	_options.embed = 0;
-	_options.hide_bar = false;
+	_options.hide_bar = true;
 	_options.geometry = NULL;
 	_options.res_name = NULL;
 
