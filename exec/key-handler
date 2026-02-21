@@ -1,70 +1,59 @@
 #!/bin/sh
 
-# Key handler for sxiv, the idea is to use the mark binding built in and then make and action
-# you need noextname script which is on my github, otherwise just use basename
+# The key combo argument has the following form: "[C-][M-][S-]KEY",
+# where C/M/S indicate Ctrl/Meta(Alt)/Shift modifier states and KEY is the X
+# keysym as listed in /usr/include/X11/keysymdef.h without the "XK_" prefix.
 
-# Saved directory
-saved="$HOME/Media/Pictures/Saved"
-# List your directories here, or maybe read from a file?
-dirlist="~/Media/Pictures/Wallpapers\n~/Media/Pictures/Saved\n~/Media\n~/Downloads\n~/Docs"
+rotate() {
+	degree="$1"
+	tr '\n' '\0' | xargs -0 realpath | sort | uniq | while read file; do
+		case "$(file -b -i "$file")" in
+		image/jpeg*) jpegtran -rotate "$degree" -copy all -outfile "$file" "$file" ;;
+		*)           mogrify  -rotate "$degree" "$file" ;;
+		esac
+	done
+}
 
-while read file
-do
-        case "$1" in
-	"semicolon")	# Information
-		notify-send "File informationℹ️ " "$(mediainfo "$file")" ;;
+changedir() {
 
-	"d")	# Remove
-		[ "$(printf "Yes\\nNo" | dmenu -i -p "Really delete $file?")" = "Yes" ] && rm "$file" && notify-send "$(noextname "$file") deleted.❌" ;;
+CACHE="$HOME/.cache/sxiv/dirs"
+mkdir -p "$(dirname "$CACHE")"
+touch "$CACHE"
 
-	"w")	# Wallpaper
-		setbg "$file" & ;;
-	"6")	# GIMP
-		setsid -f gimp "$file" & notify-send "Opening on gimp...✏️ 🖼️" ;;
+SELECTED=$(tac "$CACHE" | awk '!seen[$0]++' | rofi -dmenu -p "sxiv cd")
 
-	"s")	# 'Save', usefull to save a wallpaper, meme, comic page, etc...
-		[ ! -d "$saved" ] && notify-send "$saved is not a directory, cancelled." && exit
-		[ "$PWD" = "$saved" ] && notify-send "You are on the SAVED DIR🤦" && exit
-		mv "$file" "$saved" && notify-send "Successfully saved🌟" "$(basename "$file")✅" &
-		;;
-	"2")
-		notify-send " hi $PWD"	;;
+[ -z "$SELECTED" ] && exit
 
-	"c")	# Rename
-		[ -z "$name" ] && name=$(dmenu -i -p "New name:")
-		[ -z "$name" ] && exit
-		[ -f "$name.$(noextname -e "$file")" ] && notify-send "There's already a file with that name😠" && exit
-		mv "$file" "$name.${file##*.}" && notify-send "'$(noextname -b "$file")' renamed📝 to '$name'" &	;;
+echo "$SELECTED" >> "$CACHE"
 
-	"r")	# Rotations
-		convert -rotate 90 "$file" "$file"	;;
-	"R")
-		convert -rotate -90 "$file" "$file"	;;
-	"U")
-		convert -rotate 180 "$file" "$file"	;;
-	"4")
-		convert -flop "$file" "$file" ;;
+# Remove duplicates, keep newest priority
+tac "$CACHE" | awk '!seen[$0]++' | tac > "$CACHE.tmp"
+mv "$CACHE.tmp" "$CACHE"
 
-	"y")	# Clipboard, doesnt seem to work with xsel
-		printf '%s' "$(basename $file)" | xclip -selection clipboard &&
-		notify-send -t 500 "Clipboard📋" "<b><i>'$file'</i></b> copied" ;;
-	"P")
-		readlink -f "$file" | tr -d '\n' | xclip -selection clipboard &&
-		notify-send "$(readlink -f "$file") copied to clipboard📋" ;;
-	"C")	# Copy
-		[ -z "$dirs" ] && dirs="$(printf "$dirlist" | dmenu -l 5 -i -p "Copy file(s) to where?"  | sed "s|~|$HOME|g")"
-		[ -z "$dirs" ] && exit
-		[ ! -d "$dirs" ] && notify-send "$dirs is not a directory, cancelled." && exit
-		cp "$file" "$dirs" && notify-send -i "$dirs/$(noextname -f "$file")" "🚚 File copied" "$(noextname "$file") moved to $(printf "$dirs" | sed "s|$HOME|~|g")" &
-		xdotool key control+R	# reload sxiv
-		;;
+# Launch new sxiv in background
+sxiv "$SELECTED"
 
-        "v")	# Move an img
-		[ -z "$dirs" ] && dirs="$(printf "$dirlist" | dmenu -l 5 -i -p "Move file(s) to where?"  | sed "s|~|$HOME|g")"
-		[ -z "$dirs" ] && exit
-		[ ! -d "$dirs" ] && notify-send "$dirs is not a directory, cancelled." && exit
-		mv "$file" "$dirs" && notify-send -i "$dirs/$(noextname -f "$file")" "🚚 File moved" "$(noextname "$file") moved to $(printf "$dirs" | sed "s|$HOME|~|g")" &
-		xdotool key control+R	# reload sxiv
-		;;
-        esac
-done
+}
+
+case "$1" in
+"C-x")      xclip -in -filter | tr '\n' ' ' | xclip -in -selection clipboard ;;
+"C-c")      while read file; do xclip -selection clipboard -target image/png "$file"; done ;;
+"C-e")      while read file; do urxvt -bg "#444" -fg "#eee" -sl 0 -title "$file" -e sh -c "exiv2 pr -q -pa '$file' | less" & done ;;
+"C-g")      tr '\n' '\0' | xargs -0 gimp & ;;
+"i")      
+    while read file; do
+        qimgv "$file" & 
+        exit
+    done ;;
+"C-w")
+    while read -r file; do
+        TARGET="$HOME/.dotfiles/i3/Wallpaper/Wallpaper"
+        rm -f "$TARGET"
+        ln -s "$file" "$TARGET"
+        feh --bg-fill "$file"
+        notify-send "Wallpaper Changed" "Set to $file"
+    done
+    ;;
+"c")      changedir ;;
+esac
+
