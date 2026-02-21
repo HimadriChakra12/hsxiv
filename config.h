@@ -84,13 +84,11 @@ static const keymap_t keys[] = {
 	{ ControlMask,	XK_Right,         g_scroll_screen,      DIR_RIGHT },
 
 				/* Zoom */
-	{ 0,		XK_o,		g_zoom,			+1 },
-	{ 0,		XK_i,		g_zoom,			-1 },
-	{ 0,		XK_equal,	g_zoom,			+1 },
-	{ 0,		XK_minus,	g_zoom,			-1 },
-//	{ ControlMask,	XK_k,		g_zoom,			+1 },
-//	{ ControlMask,	XK_j,		g_zoom,			-1 },
-//	{ 0,		XK_equal,	i_set_zoom,		100 },
+	{ 0,            XK_equal,         g_zoom,               +1 },
+	{ 0,            XK_plus,          i_set_zoom,           100 },
+	{ 0,            XK_KP_Add,        i_set_zoom,           100 },
+	{ 0,            XK_minus,         g_zoom,               -1 },
+	{ 0,            XK_KP_Subtract,   g_zoom,               -1 },
 
 				/* Marks */
 	{ 0,		XK_m,		g_toggle_image_mark,	None },
@@ -160,7 +158,7 @@ static const button_t buttons[] = {
 	/* modifiers	button		function		argument */
 	{ 0,		1,		i_cursor_navigate,	None },
 	{ 0,		2,		g_switch_mode,		None },
-	{ 0,		3,		i_drag,		DRAG_ABSOLUTE },
-	{ 0,		4,		g_zoom,			+1 },
-	{ 0,		5,		g_zoom,			-1 },
+	{ 0,		3,		i_drag,		        DRAG_ABSOLUTE },
+	{ 0,        4,      g_scroll_screen,    DIR_UP },
+	{ 0,        5,      g_scroll_screen,    DIR_DOWN },
 };
