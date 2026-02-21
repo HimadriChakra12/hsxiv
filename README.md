@@ -30,6 +30,13 @@ imlib2-devel libexif-devel giflib-devel
 * Stream images directly from the web (example: `sxiv 'https://raw.githubusercontent.com/explosion-mental/sxiv/main/sxiv.png'` )
 * _Single recursive_ with -r. ( example: `sxiv -r image.png` will scan the whole directory for images in which `image.png` is located, if you want true recursivess, all subdirs also, use -R ) _Note:_ or just simly use the '.' directory, like `sxiv .`
 
+# HimBuild Confs
+
+* **config.h** -> Keybinds are changed to default sxiv + Changed the zoom keybind from + -> = + Mouse scrollbar for scrolling
+* **install.sh** -> autobuild and copy the binary
+* **options.c** -> hiding the bar
+* **exec** -> Providing my script
+
 ## Key Handler
 With the patch I made (I'll formatting correctly), there's no need for
 "prefix-key" to execute a command on keyhandler, pretty stuff! Although there
