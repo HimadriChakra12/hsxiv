@@ -50,7 +50,7 @@ case "$1" in
         TARGET="$HOME/.dotfiles/i3/Wallpaper/Wallpaper"
         rm -f "$TARGET"
         ln -s "$file" "$TARGET"
-        feh --bg-fill "$file"
+        sxiv -B "$file"
         notify-send "Wallpaper Changed" "Set to $file"
     done
     ;;
