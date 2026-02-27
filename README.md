@@ -34,8 +34,9 @@ imlib2-devel libexif-devel giflib-devel
 
 * **config.h** -> Keybinds are changed to default sxiv + Changed the zoom keybind from + -> = + Mouse scrollbar for scrolling
 * **install.sh** -> autobuild and copy the binary
-* **options.c** -> hiding the bar
+* **options.c** -> hiding the bar + The wallpaper arg
 * **exec** -> Providing my script
+* **wallpaper.c + wallpaper.h** -> wallpaper arg "-B" (cause I don't want to use feh "another image viewer" to manage my wallpaper)
 
 ## Key Handler
 With the patch I made (I'll formatting correctly), there's no need for
