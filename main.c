@@ -32,6 +32,7 @@
 
 #include "sxiv.h"
 #include "config.h"
+#include "wallpaper.h"
 
 typedef struct {
 	struct timeval when;
@@ -1047,6 +1048,12 @@ main(int argc, char **argv)
 	setlocale(LC_COLLATE, "");
 
 	parse_options(argc, argv);
+
+    if (options->bg_fill) {
+        printf("Setting wallpaper: %s\n", options->bg_file);
+        set_wallpaper_fill(options->bg_file);
+        return 0;
+    }
 
 	if (options->clean_cache) {
 		tns_init(&tns, NULL, NULL, NULL, NULL);

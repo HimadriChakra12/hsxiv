@@ -72,8 +72,15 @@ parse_options(int argc, char **argv)
 	_options.clean_cache = false;
 	_options.private_mode = false;
 
-	while ((opt = getopt(argc, argv, "A:abce:fG:g:hin:N:opqRrS:s:tvZz:")) != -1) {
+    _options.bg_fill = false;
+    _options.bg_file = NULL;
+
+	while ((opt = getopt(argc, argv, "A:abce:fG:g:hin:N:opqRrS:s:tvZz:B:")) != -1) {
 		switch (opt) {
+            case 'B':
+                _options.bg_fill = true;
+                _options.bg_file = optarg;
+                break;
 			case '?':
 				print_usage();
 				exit(EXIT_FAILURE);

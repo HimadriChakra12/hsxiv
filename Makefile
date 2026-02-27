@@ -2,7 +2,7 @@
 
 include config.mk
 
-SRC = autoreload.c commands.c image.c main.c options.c thumbs.c util.c window.c
+SRC = autoreload.c commands.c image.c main.c options.c thumbs.c util.c window.c wallpaper.c
 OBJ = $(SRC:.c=.o)
 
 all: options sxiv
