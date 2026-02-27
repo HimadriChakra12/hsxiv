@@ -1,5 +1,3 @@
-/* wallpaper.c */
-
 #include <stdlib.h>
 #include <stdio.h>
 #include <unistd.h>
@@ -7,30 +5,14 @@
 #include <X11/Xatom.h>
 #include <Imlib2.h>
 #include <math.h>
-
 #include "wallpaper.h"
 
-/* This process keeps running so the pixmap stays alive */
 void set_wallpaper_fill(const char *path)
 {
-    pid_t pid = fork();
-    if (pid < 0) {
-        perror("fork");
-        return;
-    }
-    if (pid > 0) {
-        /* Parent exits immediately */
-        return;
-    }
-
-    /* Child continues and becomes daemon */
-    if (setsid() < 0)
-        perror("setsid");
-
     Display *dpy = XOpenDisplay(NULL);
     if (!dpy) {
         fprintf(stderr, "Cannot open display\n");
-        exit(1);
+        return;
     }
 
     int screen = DefaultScreen(dpy);
@@ -43,7 +25,7 @@ void set_wallpaper_fill(const char *path)
     if (!img) {
         fprintf(stderr, "Failed to load image: %s\n", path);
         XCloseDisplay(dpy);
-        exit(1);
+        return;
     }
 
     imlib_context_set_display(dpy);
@@ -68,7 +50,7 @@ void set_wallpaper_fill(const char *path)
 
     imlib_render_image_on_drawable_at_size(x, y, nw, nh);
 
-    /* apply to root window */
+    /* set wallpaper on root window */
     XSetWindowBackgroundPixmap(dpy, root, pm);
 
     Atom prop_root = XInternAtom(dpy, "_XROOTPMAP_ID", False);
@@ -83,11 +65,5 @@ void set_wallpaper_fill(const char *path)
     XFlush(dpy);
 
     imlib_free_image();
-
-    /* Keep the process alive to persist wallpaper */
-    while (1) {
-        sleep(3600); /* sleep 1 hour at a time */
-    }
-
     XCloseDisplay(dpy);
 }
