@@ -52,6 +52,7 @@ static const keymap_t keys[] = {
 	{ 0,            XK_G,             g_n_or_last,          None },
 	{ 0,            XK_r,             g_reload_image,       None },
 	{ 0,            XK_D,             g_remove_image,       None },
+    { 0,            XK_r,             g_yank_image,      None },
 
 	{ ControlMask,  XK_h,             g_scroll_screen,      DIR_LEFT },
 	{ ControlMask,  XK_Left,          g_scroll_screen,      DIR_LEFT },

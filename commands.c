@@ -16,9 +16,14 @@
  * along with sxiv.  If not, see <http://www.gnu.org/licenses/>.
  */
 #include <stdlib.h>
+#include <stdio.h>
 #include <string.h>
 #include <unistd.h>
 #include <sys/wait.h>
+#include <unistd.h>
+#include <sys/types.h>
+#include <sys/wait.h>
+#include <stdbool.h>
 
 #include "sxiv.h"
 #include "config.h"
@@ -35,6 +40,7 @@ void animate(void);
 void slideshow(void);
 void set_timeout(timeout_f, int, bool);
 void reset_timeout(timeout_f);
+bool cg_yank_image(arg_t);
 
 extern appmode_t mode;
 extern img_t img;
@@ -53,6 +59,24 @@ extern int prefix;
 //extern bool extprefix;	/* Not needed! */
 bool
 img_frame_goto(img_t *, int);
+
+bool cg_yank_image(arg_t _)
+{
+    if (!files[fileidx].path)
+        return false;
+
+    char cmd[512];
+
+    // Copy only the currently viewed image to the clipboard
+    // Assumes image is compatible with xclip (PNG/JPG/GIF)
+    snprintf(cmd, sizeof(cmd),
+             "xclip -selection clipboard -t image/png -i '%s'",
+             files[fileidx].path);
+
+    system(cmd);
+
+    return false;
+}
 
 bool
 cg_switch_mode(arg_t _)
