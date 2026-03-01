@@ -4,7 +4,7 @@
 /* appearance */
 static const int  topbar      = 0;             /* 0 means bottom bar (default) */
 static const char bgcolor[]   = "#1d2021"; /* dark0_hard */
-static const char fgcolor[]   = "#504945"; /* dark2 */
+static const char fgcolor[]   = "#7daea3"; /* dark2 */
 static const char markcolor[] = "#fe8019"; /* bright orange */
 static const char selcolor[]  = "#fbf1c7"; /* light0 */
 static const char leterfont[] = "JetBrains Mono Medium:pixelsize=15:antialias=true:autohint=true";   //multiple fonts?
