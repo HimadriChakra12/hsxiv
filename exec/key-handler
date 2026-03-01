@@ -14,37 +14,11 @@ rotate() {
 	done
 }
 
-changedir() {
-
-CACHE="$HOME/.cache/sxiv/dirs"
-mkdir -p "$(dirname "$CACHE")"
-touch "$CACHE"
-
-SELECTED=$(tac "$CACHE" | awk '!seen[$0]++' | rofi -dmenu -p "sxiv cd")
-
-[ -z "$SELECTED" ] && exit
-
-echo "$SELECTED" >> "$CACHE"
-
-# Remove duplicates, keep newest priority
-tac "$CACHE" | awk '!seen[$0]++' | tac > "$CACHE.tmp"
-mv "$CACHE.tmp" "$CACHE"
-
-# Launch new sxiv in background
-sxiv "$SELECTED"
-
-}
-
 case "$1" in
 "C-x")      xclip -in -filter | tr '\n' ' ' | xclip -in -selection clipboard ;;
-"C-c")      while read file; do xclip -selection clipboard -target image/png "$file"; done ;;
+"y")      while read file; do xclip -selection clipboard -target image/png "$file"; done ;;
 "C-e")      while read file; do urxvt -bg "#444" -fg "#eee" -sl 0 -title "$file" -e sh -c "exiv2 pr -q -pa '$file' | less" & done ;;
 "C-g")      tr '\n' '\0' | xargs -0 gimp & ;;
-"i")      
-    while read file; do
-        qimgv "$file" & 
-        exit
-    done ;;
 "C-w")
     while read -r file; do
         TARGET="$HOME/.dotfiles/i3/Wallpaper/Wallpaper"
@@ -54,6 +28,35 @@ case "$1" in
         notify-send "Wallpaper Changed" "Set to $file"
     done
     ;;
-"c")      changedir ;;
+"c")
+    #!/bin/bash
+
+    while read -r file; do
+        dir="$(dirname "$file")"
+        base="$(basename "$file")"
+        name="${base%.*}"
+        ext="${base##*.}"
+
+        case "$1" in
+            c)
+                # Launch sxiv fullscreen in a separate window if not already
+                # Using -f for fullscreen and -a for auto-zoom to 100%
+                sxiv -f -a "$file" &
+
+            # Give sxiv a moment to render
+            sleep 0.2
+
+            # Select region interactively
+            eval $(slop -f "X=%x Y=%y W=%w H=%h")
+
+            # Crop the image
+            magick "$file" -crop ${W}x${H}+${X}+${Y} +repage \
+                "$dir/${name}_cropped.$ext"
+
+            # Kill the fullscreen sxiv after cropping
+            pkill -f "sxiv -f -a $file"
+            ;;
+    esac
+done
 esac
 
