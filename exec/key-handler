@@ -114,5 +114,10 @@ case "$1" in
     done
     ;;
 "c")    crop ;;
+"d")
+    while read -r file; do
+        rm $file
+    done
+    ;;
 esac
 
