@@ -97,19 +97,28 @@ def main():
         img_orig = cv2.cvtColor(np.array(pil), cv2.COLOR_RGB2BGR)
     IH, IW = img_orig.shape[:2]
 
+    # get screen resolution reliably before creating any window
+    SW, SH = 0, 0
+    try:
+        import subprocess
+        out = subprocess.check_output(
+            "xrandr | grep ' connected' | grep -oP '[0-9]+x[0-9]+\\+0\\+0' | head -1",
+            shell=True, timeout=2).decode().strip()
+        if out:
+            SW, SH = map(int, out.split('+')[0].split('x'))
+    except Exception:
+        pass
+    if SW <= 0 or SH <= 0:
+        try:
+            import tkinter as _tk
+            _r = _tk.Tk(); _r.withdraw()
+            SW, SH = _r.winfo_screenwidth(), _r.winfo_screenheight()
+            _r.destroy()
+        except Exception:
+            SW, SH = 1920, 1080
+
     cv2.namedWindow("crop", cv2.WINDOW_NORMAL)
     cv2.setWindowProperty("crop", cv2.WND_PROP_FULLSCREEN, cv2.WINDOW_FULLSCREEN)
-
-    # get screen size from a dummy read
-    sw = cv2.getWindowImageRect("crop")  # may return 0,0 before first imshow
-    # safer: use env or just do first imshow to get real size
-    dummy = np.zeros((100,100,3), dtype=np.uint8)
-    cv2.imshow("crop", dummy)
-    cv2.waitKey(1)
-    rect = cv2.getWindowImageRect("crop")
-    SW, SH = rect[2], rect[3]
-    if SW <= 0 or SH <= 0:
-        SW, SH = 1920, 1080  # fallback
 
     CH = SH - BAR_H  # canvas height (below bar)
 

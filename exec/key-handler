@@ -115,7 +115,7 @@ case "$1" in
     ;;
 "c")
     while read -r file; do
-        "$HOME/.config/sxiv/exec/dist/crop" $file
+        "$HOME/.config/sxiv/exec/crop.py" $file
     done
     ;;
 "d")
