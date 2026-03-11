@@ -113,7 +113,11 @@ case "$1" in
         notify-send "Wallpaper Changed" "Set to $file"
     done
     ;;
-"c")    crop ;;
+"c")
+    while read -r file; do
+        "$HOME/.config/sxiv/exec/dist/crop" $file
+    done
+    ;;
 "d")
     while read -r file; do
         rm $file
