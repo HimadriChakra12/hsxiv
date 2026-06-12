@@ -118,6 +118,11 @@ case "$1" in
         "$HOME/.config/sxiv/exec/crop.py" $file
     done
     ;;
+"C-e")
+    while read -r file; do
+        sxat -f $file
+    done
+    ;;
 "d")
     while read -r file; do
         rm $file
