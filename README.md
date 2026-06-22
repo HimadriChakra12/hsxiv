@@ -38,6 +38,17 @@ imlib2-devel libexif-devel giflib-devel
 * **exec** -> Providing my script
 * **wallpaper.c + wallpaper.h** -> wallpaper arg "-B" (cause I don't want to use feh "another image viewer" to manage my wallpaper)
 
+# HimCheckups
+
+* **centralize script handling logic** -> [3659361](https://github.com/cdown/sxiv/commit/3659361e76c5c994bee3467787c00e89780cccbc)
+* **introduce img_free()** -> [53a43cb](https://github.com/cdown/sxiv/commit/53a43cb38838bd65512b3b8902cc8a3ecfaaca56)
+* **Remove faulty assertations** -> [69d4957](https://github.com/cdown/sxiv/commit/69d4957a92030bf89323d9174c45263727483de4)
+* **make assertions opt-in** -> [4048059](https://github.com/cdown/sxiv/commit/40480596cad8654dca225e7fb136f4151f5df5c0)
+* **loading old frames due to multi-frame cache** -> [4b67816](https://github.com/cdown/sxiv/commit/4b67816eae77db28db64e5e80d0d99c60e74973f)
+* **memory leak in win_draw_bar** -> [824b2cb](https://github.com/cdown/sxiv/commit/824b2cb8858b19ace3e26a0f54cf9dd740be9b59)
+* **improve performance and simplify API* -> [49d11f0](https://github.com/cdown/sxiv/commit/49d11f0d1fae43ae1e5f61204ed051e889062767)
+* **wrong length on animated webp** -> [3140638](https://github.com/cdown/sxiv/commit/314063804293ff37ece428b512f8138ecd1eb7fc)
+
 ## Key Handler
 With the patch I made (I'll formatting correctly), there's no need for
 "prefix-key" to execute a command on keyhandler, pretty stuff! Although there
