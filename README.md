@@ -46,8 +46,23 @@ imlib2-devel libexif-devel giflib-devel
 * **make assertions opt-in** -> [4048059](https://github.com/cdown/sxiv/commit/40480596cad8654dca225e7fb136f4151f5df5c0)
 * **loading old frames due to multi-frame cache** -> [4b67816](https://github.com/cdown/sxiv/commit/4b67816eae77db28db64e5e80d0d99c60e74973f)
 * **memory leak in win_draw_bar** -> [824b2cb](https://github.com/cdown/sxiv/commit/824b2cb8858b19ace3e26a0f54cf9dd740be9b59)
-* **improve performance and simplify API* -> [49d11f0](https://github.com/cdown/sxiv/commit/49d11f0d1fae43ae1e5f61204ed051e889062767)
+* **memory leak in win_draw_bar** -> [bf6c062](https://github.com/cdown/sxiv/commit/bf6c0627792485bcdefe5aa055bece21ca22bbec)
+* **improve performance and simplify API** -> [49d11f0](https://github.com/cdown/sxiv/commit/49d11f0d1fae43ae1e5f61204ed051e889062767)
 * **wrong length on animated webp** -> [3140638](https://github.com/cdown/sxiv/commit/314063804293ff37ece428b512f8138ecd1eb7fc)
+* **improve starting on fullscreen** -> [14e9c34](https://github.com/cdown/sxiv/commit/14e9c34ecc399d7b96151f79f1775c8cb5d67a86)
+* **poll()** -> [6922d5d](https://github.com/cdown/sxiv/commit/6922d5d01b03b0f584a411803d2da45b07f5af01)
+* **Dont quit if imlib fails** -> [f05165a](https://github.com/cdown/sxiv/commit/f05165a77a538b42ffd2d473eded25188cb56ea0)
+
+* **close the descriptor** -> [1ef0c1f](https://github.com/cdown/sxiv/commit/1ef0c1f15280a3ae366d43e2e4a86b5a1e1d454e)
+* **scroll to image center** -> [2ac4470](https://github.com/cdown/sxiv/commit/2ac44709bd9a9ec8d3ab60a40a81ac7ca3ad1b57)
+* **thumbnail binding** -> [7a75c42](https://github.com/cdown/sxiv/commit/7a75c42b37b08f44c72f9a7c98eb6076967470fb)
+* **Move shared code to a func** -> [61da0a8](https://github.com/cdown/sxiv/commit/61da0a8ca9f2a39042f7ef9af63a2dd48057c927)
+
+#### webp
+1. [unneeded animated-webp hacks](https://github.com/cdown/sxiv/commit/eccd7de532b09fb738638095675eefc7be96ecc3)
+2. [unnecessary casting](https://github.com/cdown/sxiv/commit/3b6db44267438fb0f9d67b3783d3bc6713c3c07f)
+3. [use errno](https://github.com/cdown/sxiv/commit/b0b16f1d0ffa550a8358206de844c9cf13f94ada)
+
 
 ## Key Handler
 With the patch I made (I'll formatting correctly), there's no need for
