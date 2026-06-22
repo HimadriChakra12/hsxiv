@@ -4,9 +4,8 @@ include config.mk
 
 SRC = autoreload.c commands.c image.c main.c options.c thumbs.c util.c window.c wallpaper.c
 OBJ = $(SRC:.c=.o)
-ICONS = icon/16x16.png icon/32x32.png icon/48x48.png icon/64x64.png icon/128x128.png
 
-all: options sxiv icon desktop
+all: options sxiv desktop
 
 options:
 	@echo sxiv build options:
@@ -43,21 +42,6 @@ desktop:
 	@echo "INSTALL sxiv.desktop"
 	mkdir -p $(DESTDIR)$(PREFIX)/share/applications
 	cp sxiv.desktop $(DESTDIR)$(PREFIX)/share/applications
-
-icon:
-	@echo "INSTALL icon"
-	for f in $(ICONS); do \
-		dir="$(DESTDIR)$(PREFIX)/share/icons/hicolor/$${f%.png}/apps"; \
-		mkdir -p "$$dir"; \
-		cp "icon/$$f" "$$dir/sxiv.png"; \
-		chmod 644 "$$dir/sxiv.png"; \
-	done
-
-icon_cleanup:
-	for f in $(ICONS); do \
-		dir="$(DESTDIR)$(PREFIX)/share/icons/hicolor/$${f%.png}/apps"; \
-		rm -f "$$dir/sxiv.png"; \
-	done
 
 install: all
 	mkdir -p $(DESTDIR)$(PREFIX)/bin
