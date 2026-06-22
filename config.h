@@ -40,6 +40,7 @@ static const int thumb_sizes[]   = {
  * size is kept at 4MiB. For most users, it is advised to pick a value close to
  * or above 128MiB for better image (re)loading performance. */
 static const int cachesize = 256; /* 256MiB */
+static const int ignore_mask = Mod2Mask | LockMask;
 
 static const keymap_t keys[] = {
 	/* modifiers    key               function              argument */
