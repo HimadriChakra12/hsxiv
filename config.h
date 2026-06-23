@@ -15,13 +15,14 @@ enum { WIN_WIDTH = 800, WIN_HEIGHT = 600 };    /* -g option; window dimensions *
 static const float SLIDESHOW_DELAY = 4.5;      /* -S option; slideshow delay in seconds */
 static const double GAMMA_MAX      = 10.0;     /* [-GAMMA_RANGE, 0] and (0, GAMMA_RANGE] are mapped.. */
 static const int GAMMA_RANGE       = 32;       /* to the ranges [0, 1], and (1, GAMMA_MAX] */
-static const int PAN_FRACTION      = 4;        /* 'i_scroll' pans image 1/PAN_FRACTION of screen width/height */
+static const int PAN_FRACTION      = 20;        /* 'i_scroll' pans image 1/PAN_FRACTION of screen width/height */
 static const bool ANTI_ALIAS       = true;     /* false means pixelate images at zoom level != 100% */
 static const bool ALPHA_LAYER      = false;    /* if true use checkerboard background for alpha layer (i_toggle_alpha) */
 static const float zoom_levels[]   = {
  /* first/last value is used as min/max zoom percent level */
-	12.5, 14,  25,  35,  45,  50,  75,
-	100, 125,  150, 200, 400, 800, 900
+    3.125, 6.25, 12.5,  25.0,  50.0,  75.0,
+	100.0, 150.0, 200.0, 300.0, 400.0, 600.0,
+	800.0, 1200.0, 1600.0, 2400.0
 };
 
 

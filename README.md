@@ -52,11 +52,19 @@ imlib2-devel libexif-devel giflib-devel
 * **improve starting on fullscreen** -> [14e9c34](https://github.com/cdown/sxiv/commit/14e9c34ecc399d7b96151f79f1775c8cb5d67a86)
 * **poll()** -> [6922d5d](https://github.com/cdown/sxiv/commit/6922d5d01b03b0f584a411803d2da45b07f5af01)
 * **Dont quit if imlib fails** -> [f05165a](https://github.com/cdown/sxiv/commit/f05165a77a538b42ffd2d473eded25188cb56ea0)
-
-* **close the descriptor** -> [1ef0c1f](https://github.com/cdown/sxiv/commit/1ef0c1f15280a3ae366d43e2e4a86b5a1e1d454e)
 * **scroll to image center** -> [2ac4470](https://github.com/cdown/sxiv/commit/2ac44709bd9a9ec8d3ab60a40a81ac7ca3ad1b57)
 * **thumbnail binding** -> [7a75c42](https://github.com/cdown/sxiv/commit/7a75c42b37b08f44c72f9a7c98eb6076967470fb)
 * **Move shared code to a func** -> [61da0a8](https://github.com/cdown/sxiv/commit/61da0a8ca9f2a39042f7ef9af63a2dd48057c927)
+* **svg support** -> [2e210d9](https://github.com/xyb3rt/sxiv/commit/2e210d9dcd3452c2da03480b989ac78b858fcbff)
+* **trash** -> [f3ffeb2](https://github.com/xyb3rt/sxiv/commit/f3ffeb2dab993ccccb389dbe60ba5d1730c53e97)
+* **deletekey** -> [5d3951f](https://github.com/xyb3rt/sxiv/commit/5d3951f4f812393464352334a24e273d3b3c3a8c)
+* **print** -> [38c421e](https://github.com/xyb3rt/sxiv/commit/38c421e01ff79efb808787c9f2e7a733c42a9471)
+* **bar_alpha** -> [cb31f1f](https://github.com/xyb3rt/sxiv/commit/cb31f1fe9e57e694d4849b844cec1cd1846ed185)
+
+* **close the descriptor** -> [1ef0c1f](https://github.com/cdown/sxiv/commit/1ef0c1f15280a3ae366d43e2e4a86b5a1e1d454e)
+
+* [0ion9](https://github.com/xyb3rt/sxiv/compare/master...0ion9:sxiv:master)
+* [gechnolikov - filtering](https://github.com/xyb3rt/sxiv/compare/master...gechnolikov:sxiv:master)
 
 #### webp
 1. [unneeded animated-webp hacks](https://github.com/cdown/sxiv/commit/eccd7de532b09fb738638095675eefc7be96ecc3)
